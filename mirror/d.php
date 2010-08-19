@@ -31,7 +31,7 @@ if (abs($timestamp - time()) > MAX_LINK_AGE)
 if (URL_FOPEN_SUPPORT)
 {
 	//If we can support it, we notify the main server that the fulfillment was completed successfully.
-	$handle = fopen("http://osu.ppy.sh/web/dl-check.php?k=$SECRET_KEY&u=$userId&s=$beatmapSetId&t=$timestamp", "r");
+	$handle = fopen("http://osu.ppy.sh/web/dl-check.php?k=".SECRET_KEY."&u=$userId&s=$beatmapSetId&t=$timestamp", "r");
 	$success = fgets($handle);
 	fclose($handle);
 	
