@@ -23,8 +23,8 @@ if (!file_exists("mapsgohere/"))
 
 //wget is most reliable and memory-efficient.
 exec('wget ' . "\"http://osu.ppy.sh/d/$beatmapSetId?m=$mirrorId&k=" . SECRET_KEY . "\" -O " . FILES_DIRECTORY . $beatmapSetId);
-if ($noVideo)
-	exec('wget ' . "\"http://osu.ppy.sh/d/$beatmapSetId"."n?m=$mirrorId&k=" . SECRET_KEY . "\" -O " . FILES_DIRECTORY . $beatmapSetId . 'n');
+//if ($noVideo)
+//	exec('wget ' . "\"http://osu.ppy.sh/d/$beatmapSetId"."n?m=$mirrorId&k=" . SECRET_KEY . "\" -O " . FILES_DIRECTORY . $beatmapSetId . 'n');
 
 echo("success");
 

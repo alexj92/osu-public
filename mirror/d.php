@@ -9,6 +9,7 @@ $receivedChecksum = $_REQUEST['c'];
 $timestamp = (int)$_REQUEST['t'];
 $beatmapSetId = (int)str_replace('n','',$_REQUEST['s']);
 $userId = (int)$_REQUEST['u'];
+$filesize = (int) $_REQUEST['l'];
 
 $calculatedChecksum = md5($filename . $userId . $timestamp . SECRET_KEY);
 
@@ -42,9 +43,9 @@ if (URL_FOPEN_SUPPORT)
 	}
 }
 
-$localFilename = FILES_DIRECTORY . $beatmapSetId . ($noVideo ? 'n' : '');
+$localFilename = FILES_DIRECTORY . $beatmapSetId ;
 
-$filesize = filesize($localFilename);
+//$filesize = filesize($localFilename);
 
 header("Content-Type: application/force-download");
 header("Content-Type: application/octet-stream");
@@ -65,7 +66,17 @@ ob_end_flush();
 if($file = fopen($localFilename, 'rb'))
 {
 	while(!feof($file) && !connection_aborted())
+    {
+        $pos = ftell($file);
+        //in novideo mode filesize oould be smaller than the real filesize
+        if ($noVideo && $pos >= ($filesize - 1024 * $READ_CHUNK_SIZE))
+        {
+            $bytesleft = $filesize - $pos;
+            echo fread($file, $bytesleft);
+            break;
+        }
 		echo fread($file, 1024 * $READ_CHUNK_SIZE);
+    }
 	fclose($file);
 }
 
