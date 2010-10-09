@@ -4,4 +4,5 @@
 	define(FILES_DIRECTORY,'mapsgohere/');
 	define(MAX_LINK_AGE,120);
 	define(URL_FOPEN_SUPPORT,true);
+	define(USE_XSENDFILE,false);
 ?>

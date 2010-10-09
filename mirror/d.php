@@ -53,20 +53,23 @@ header("Content-Disposition: attachment;filename=\"$filename\";");
 header("Content-Transfer-Encoding: binary");
 header("Content-Length: $filesize");
 
-//Set request timeout to 1 hour.
-set_time_limit(3600);
-
-//KB per file read operation.  Larger requires less IO seeking but uses more memory.
-$READ_CHUNK_SIZE = 512;
-
-ob_implicit_flush(true);
-ob_end_flush();
-
-if($file = fopen($localFilename, 'rb'))
+if (USE_XSENDFILE)
 {
-	while(!feof($file) && !connection_aborted())
-		echo fread($file, 1024 * $READ_CHUNK_SIZE);
-	fclose($file);
-}
+  header("X-Sendfile: $localFilename");
+} else {
+  //Set request timeout to 1 hour.
+  set_time_limit(3600);
 
-exit();
+  //KB per file read operation.  Larger requires less IO seeking but uses more memory.
+  $READ_CHUNK_SIZE = 512;
+
+  ob_implicit_flush(true);
+  ob_end_flush();
+
+  if($file = fopen($localFilename, 'rb'))
+  {
+  	while(!feof($file) && !connection_aborted())
+  		echo fread($file, 1024 * $READ_CHUNK_SIZE);
+  	fclose($file);
+  }
+}
