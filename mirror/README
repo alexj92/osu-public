@@ -1,1 +1,10 @@
 Files and scripts required to setup a download mirror for the public site.
+
+X-Accel-Redirect support requires that
+a) the webserver is nginx, 
+b) a location block is set as such:
+	location /mapsgohere/ {
+		internal;
+		alias /home/user/public_html/mapsgohere/;
+	}
+where mapsgohere is FILES_DIRECTORY.
