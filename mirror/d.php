@@ -56,9 +56,10 @@ header("Content-Length: $filesize");
 if (USE_XSENDFILE)
 {
   header("X-Sendfile: $localFilename");
-} else if(USE_X_ACCEL_REDIRECT)
+}
+else if(USE_XACCELREDIRECT)
 {
-  header("X-Accel-Redirect: $localFilename");
+  header("X-Accel-Redirect: /$localFilename");
 } else {
   //Set request timeout to 1 hour.
   set_time_limit(3600);
